@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { useSelector, useDispatch } from "react-redux";
+import { increment, decrement, reset, logIn, logOut } from "./redux/actions";
+import Profile from "./Components/Profile";
+import CounterActions from "./Components/CounterActions";
 
 function App() {
+  const counter = useSelector((state) => state.counter);
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Bienvenue dans cette démo React-Redux</h1>
+      {/* Affichage et gestion du compteur */}
+      <h3>Compteur: {counter.value}</h3>
+      <button onClick={() => dispatch(increment())}>+</button>
+      <button onClick={() => dispatch(decrement())}>-</button>
+      <button onClick={() => dispatch(reset())}>Reset</button>
+
+      {/* Affichage et gestion de l'authentification */}
+      <h3>Authentification: {auth ? "Connecté" : "Déconnecté"}</h3>
+      <button onClick={() => dispatch(logIn())}>Log In</button>
+      <button onClick={() => dispatch(logOut())}>Log Out</button>
+      <br />
+
+      <Profile />
+      <br></br>
+      <CounterActions />
     </div>
   );
 }
